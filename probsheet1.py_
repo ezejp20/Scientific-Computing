@@ -1,0 +1,24 @@
+import numpy
+import pprint
+import scipy
+import scipy.linalg
+a = scipy.array([[4.0, -1.0, 0.0, 0.0, 0.0],[-1.0, 4.0, -1.0, 0.0, 0.0],[0.0, -1.0, 4.0, -1.0, 0.0],[0.0, 0.0, -1.0, 4.0, -1.0],[0.0, 0.0, 0.0, -1.0, 4.0]])
+
+P, L, U = scipy.linalg.lu(a)
+
+print "a:"
+pprint.pprint(a)
+
+print "P:"
+pprint.pprint(P)
+
+print "L:"
+pprint.pprint(L)
+
+print "U:"
+pprint.pprint(U)
+
+x = scipy.array([[x1],[x2],[x3],[x4],[x5]])
+b = scipy.array([[1.0],[2.0],[4.0],[6.0],[3.0]])
+b1=b.copy()
+

@@ -1,0 +1,61 @@
+from pylab import *
+import pylab as py
+from numpy import *
+import numpy as np
+
+data = np.loadtxt('dow.txt') #Has 1024 Components
+
+figure(1)
+plot(data, 'y-',label='Original Data') #Plotting original data
+xlabel('Time (days)')
+ylabel('Daily closing value of Dow Jones')
+
+
+Out = np.fft.rfft(data,1024) #Fourier transform of data giving 513 components
+Out1 = np.copy(Out) #Copies so that I dont change original array when using making later coefficients zero
+Out2 = np.copy(Out)
+
+for i in range(0,513): #for loop making last 90% of coefficients equal 0
+	if i<=51: 
+		continue
+	if i>51:
+		Out1[i]=0
+
+New = np.fft.irfft(Out1) #Inverse transform of new array (with 90% zeros)
+
+figure(1) #plotting this on the same graph as the original data
+plot(New,'r-',label='90% Zeros Data')
+
+
+for i in range(0,513): #making fourier coeffiecient 98% zeros
+	if i<=10:
+		continue
+	if i>10:
+		Out2[i]=0
+
+New1 = np.fft.irfft(Out2) #inverse fourier of 98% zeros array
+
+figure(1) #plotting the new data on the same graph as previous two
+plot(New1, 'g-',label='98% Zeros Data')
+plt.title('Graph of Dow Jones closing value over time')
+plt.legend(loc='best')
+show()
+
+figure(3) #plotting a graph of original data against 98% zeros data
+plot(data,'y-',label='Original Data')
+plot(New1,'g-',label='98% Zeros Data')
+xlabel('Time (days)')
+ylabel('Daily closing value of Dow Jones')
+plt.title('Graph of Dow Jones closing value over time')
+plt.legend(loc='best')
+show()
+
+figure(2) #plotting a graph of original data againt 90% zeros data
+plot(data,'y-',label='Original Data')
+plot(New,'r-',label='90% Zeros Data')
+xlabel('Time (days)')
+ylabel('Daily closing value of Dow Jones')
+plt.title('Graph of Dow Jones closing value over time')
+plt.legend(loc='best')
+show()
+			
